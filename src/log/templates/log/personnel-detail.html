@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% block content %}
+<hr>
+
+    <div class="row">
+        <div class="col-md-6">
+            <p>Name:  <button type="button" class="btn btn-outline-grey waves-effect">{{person.name }}</button></p>
+        </div>
+        <div class="col-md-6">
+            <p>Deparment:          <button type="button" class="btn btn-outline-grey waves-effect">{{person.department }}</button></p>
+        </div>
+
+    </div>
+
+    <br>
+    <div class="row">
+        <div class="col-md-6">
+            <p>Company:<button type="button" class="btn btn-outline-grey waves-effect">{{person.company }}</button></p>
+        </div>
+        <div class="col-md-6">
+            <p>Date Position:<button type="button" class="btn btn-outline-grey waves-effect">{{person.rank }}</button></p>
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-md-6">
+            <p>Date Joined:<button type="button" class="btn btn-outline-grey waves-effect">{{person.date_joined }}</button></p>
+        </div>
+        <div class="col-md-6">
+            <p>Date Signed off: <button type="button" class="btn btn-outline-grey waves-effect">{{person.date_signedoff }}</button></p>
+        </div>
+    </div>
+
+
+ <br>
+ <br>
+<div class="container justify-content-left">
+    <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th scope="col">Date</th>
+                    <th scope="col">Morning</th>
+                    <th scope="col">Evening</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for user in temp %}
+
+                <tr>
+                    <td>{{user.date_temp_taken}}</td>
+                    <td>{{user.temp_AM}}</td>
+                    <td>{{user.temp_PM}}</td>
+                </tr>
+
+
+
+            {% endfor %}
+
+            </tbody>
+    </table>
+</div>
+
+
+{% endblock %}

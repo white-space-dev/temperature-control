@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content%}
+
+<div class=" mt-5">
+    <div class="d-flex flex-wrap justify-content-center">
+{% for dep in qs%}   <!-- find out how to get them in rows and columns -->
+
+
+
+                <a href="{% url 'list-view' dep.pk %}" class="btn btn-primary btn-xl mb-4">{{dep.department}}
+                <i class="fas fa-play ml-2"></i>
+                </a>
+
+
+
+{% endfor %}
+    </div>
+</div>
+{% endblock %}
