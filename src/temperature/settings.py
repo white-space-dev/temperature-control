@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'log',
     'import_export',
     'weasyprint',
+    'django_crontab',
 ]
 
 MIDDLEWARE = [
@@ -126,3 +127,8 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
 
+CRONJOBS = [
+    ('* 18 * * *', 'log.cron.missing_temp')
+]
+
+IMPORT_EXPORT_USE_TRANSACTIONS = True

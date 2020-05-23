@@ -4,3 +4,6 @@ lib
 share
 *.idea
 *.sqlite3
+src/log/migrations
+src/__pycache__
+src/log/__pycache__

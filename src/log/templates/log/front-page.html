@@ -14,24 +14,28 @@
                 <th scope="col">Date Signed off</th>
                 <th scope="col">detail</th>
                 <th scope="col">Add Temp</th>
+                <th scope="col">Add Temp</th>
             </tr>
         </thead>
         <tbody>
-        {% for personnel in qs %}
+        {% for personnel in object_list %}
+        {% if personnel.onboard == True %}
             <tr>
                 <th scope="row">{{personnel.id}}</th>
                 <td>{{personnel.name}}</td>
                 <td>{{personnel.rank}}</td>
                 <td>{{personnel.company}}</td>
                 <td>{{personnel.department}}</td>
-                <td>{{personnel.date_joined}}</td>
-                <td>{{personnel.date_signedoff}}</td>
-                <td><a href="{% url 'detailed-view' personnel.pk %}"> Detail</a></td>
-                <td><a href="{% url 'add-temperature' personnel.pk %}" > Add Temp</a></td>
+                <td>{{personnel.date_joined|default_if_none:" "}}</td>
+                <td>{{personnel.date_signedoff|default_if_none:" "}}</td>
+                <td><a href="{% url 'detailed-view' personnel.pk  %}" class="btn btn-outline-primary btn-rounded waves-effect">Detail</a></td>
+                <td><a href="{% url 'add-temperature' personnel.pk %}" class="btn btn-outline-primary btn-rounded waves-effect" >AM</a></td>
+                <td><a href="{% url 'update-temperature' personnel.pk %}" class="btn btn-outline-primary btn-rounded waves-effect" >PM</a></td>
+
             </tr>
 
 
-
+        {% endif %}
         {% endfor %}
 
         </tbody>

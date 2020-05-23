@@ -7,13 +7,16 @@ from import_export.admin import ImportExportModelAdmin
 @admin.register(Personnel)
 class ViewAdmin(ImportExportModelAdmin):
     list_display = ('name', 'rank', 'department', 'date_joined', 'date_signedoff')
-    ordering = ('name',)
+    ordering = ('id',)
     search_fields = ('name', 'position')
 
-
-    #class PersonnelAdmin(admin.ModelAdmin):
-
+    # class PersonnelAdmin(admin.ModelAdmin):
 
 
-admin.site.register(Temperature)
+@admin.register(Temperature)
+class TemperatureAdmin(admin.ModelAdmin):
+    list_display = ('date_temp_taken', 'user', 'temp_AM', 'temp_PM')
+    ordering = ('-date_temp_taken',)
+#admin.site.register(Temperature)
+
 admin.site.register(Department)
