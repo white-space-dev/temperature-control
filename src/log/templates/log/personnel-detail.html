@@ -6,6 +6,48 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <style>
+    @page {
+    size: "A4";
+    margin: 1.0cm 1.5cm 1.5cm 1.5cm;
+
+}
+    header.solid
+{
+  border-style: solid;
+  border-width: 2px;
+}
+
+header * {
+  display: inline-block;
+}
+
+header img.left
+{
+  width: 75px;
+  height: 75px;
+  margin-right: 15em;
+}
+
+header img.right
+{
+  width: 100px;
+  height: 75px;
+  margin-left: 15em;
+}
+header h1
+{
+  position: relative;
+  top: 0px;
+  left: 18px;
+}
+
+p.left {
+  text-align:left;
+}
+
+p.right {
+  text-align:right;
+}
 /*!
  * Bootstrap v4.4.1 (https://getbootstrap.com/)
  * Copyright 2011-2019 The Bootstrap Authors
@@ -66,21 +108,34 @@
 </head>
 <body>
 
+<!--<div class="container">
+
+    <div class="row">
+        <div class="col-xl-2">
+            <img src="{% static 'log/SBM.png' %}" alt="" width="1%">
+        </div>
+        <div class="col-sm-8">
+            <h1 class="text-center">FPSO NGOMA </h1>
+            <h3 class="text-center">Daily Temperature Monitoring Log</h3>
+        </div>
+        <div class="col-sm-2">
+            <img src="{% static 'log/SOS.png' %}" width = "1%">
+        </div>
+
+    </div>
+</div>
+
+<h2 align="center"><img align="left" src="{% static 'log/SBM.png' %}" alt="" width="10%">                     FPSO NGOMA                     <img align="right" src="{% static 'log/SOS.png' %}" width = "10%"></h2>-->
+
+<div class="header" align="center">
+  <header >
+  <img class="left" src="{% static 'log/SBM.png' %}" alt="star"/>
+  <h1 align="center"><b>FPSO NGOMA</b></h1>
+  <img class="right" src="{% static 'log/SOS.png' %}" alt="star"/>
+  </header>
+</div>
+<h3 align="center">Daily Temperature Monitoring Log</h3>
 <div class="container">
-
-<div class="row">
-<div class="col-sm-4">
-    <img src="{% static 'log/SBM.png' %}" alt="" width="65%">
-</div>
-<div class="col-sm-4">
-    <h1 class="text-center">FPSO NGOMA </h1>
-    <h3 class="text-center">Daily Temperature Monitoring Log</h3>
-</div>
-<div class="col-sm-4 float-right">
-    <img src="{% static 'log/SOS.png' %}" alt="">
-</div>
-
-</div>
     <br>
     <div class="row ">
         <div class="col-sm-2 "></div>
@@ -105,8 +160,8 @@
         </div>
     </div>
 </div>
-    <hr>
-    <br>
+<br>
+
 
 <div class="container">
         <table class="table table-bordered">
@@ -134,6 +189,30 @@
         </table>
     </div>
 
+<br>
+    <div class="container">
+
+    <div class="row">
+        <div class="col-4">
+            Monitored By: <br><br>
+            _____________ <br>
+            Allan R. Tagongtong, MD <br>
+            N'goma Medic
+
+        </div>
+        <div class="col-6">
+
+        </div>
+        <div class="col-2">
+            Noted By: <br><br>
+            _____________ <br>
+            Jaco Posthumus <br>
+            N'goma OIM
+        </div>
+
+    </div>
+</div>
+<br>
 
    <!-- <a href="" class="text-center " >Print</a>  need to sort this out TODO -->
     <a class="btn btn-primary center" href="{% url 'print' person.id %}" role="button">Print</a>

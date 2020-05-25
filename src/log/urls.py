@@ -1,6 +1,6 @@
 from django.urls import path
 from .views import personnel_list,   department_view, html_to_pdf_view, PersonnelListView, PersonnelDetailView, \
-    update_temp, add_temp
+    update_temp, add_temp #, MyModelDownloadView
 from .cron import missing_temp
 
 

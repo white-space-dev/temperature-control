@@ -1,5 +1,7 @@
+import ssl
+
 from django.shortcuts import render
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from . models import Personnel, Department, Temperature
 from .forms import PersonnelForm
 from django.core.files.storage import FileSystemStorage
@@ -14,8 +16,14 @@ from django.urls import reverse_lazy
 from datetime import date
 
 from weasyprint import HTML
+import functools
+from django_weasyprint import WeasyTemplateResponseMixin, WeasyTemplateResponse
+from django.conf import settings
 
-# Create your views here.
+from django.template.loader import render_to_string
+
+from weasyprint.fonts import FontConfiguration
+
 
 
 def personnel_list(request, pk):
@@ -57,7 +65,7 @@ class PersonnelDetailView(DetailView):
         person = Personnel.objects.get(pk=self.kwargs['pk'])
         context = super().get_context_data(**kwargs)
         context['person'] = person
-        context['temperature'] = person.temperature_set.all()[0:13]
+        context['temperature'] = person.temperature_set.all()[0:14]
         return context
 
 def add_temp(request, pk):
@@ -143,8 +151,8 @@ def html_to_pdf_view(request, pk):
     }
     html_string = render_to_string('log/personnel-detail.html', context)
 
-    html = HTML(string=html_string)
-    html.write_pdf(target='/tmp/mypdf.pdf');
+    html = HTML(string=html_string, base_url=request.build_absolute_uri())
+    html.write_pdf(target='/tmp/mypdf.pdf', presentational_hints=True);
 
     fs = FileSystemStorage('/tmp')
     with fs.open('mypdf.pdf') as pdf:
@@ -154,5 +162,50 @@ def html_to_pdf_view(request, pk):
 
     return response
 
+#from __future__ import unicode_literals
+
+'''def temperature_record(request, pk):
+    person = get_object_or_404(Personnel, pk=pk)
+    temperature = person.temperature_set.all()
+
+    context = {
+        'person': person,
+        'temperature': temperature
+
+    }
+
+    response = HttpResponse(content_type="application/pdf")
+    response['Content-Disposition'] = 'attachment; filename="mypdf.pdf"'
+
+    html = render_to_string("log/personnel-detail.html", context)
+
+    font_config = FontConfiguration()
+    HTML(string=html).write_pdf(response, font_config=font_config)
+    return response'''
 
 
+
+
+
+
+'''class CustomWeasyTemplateResponse(WeasyTemplateResponse):
+    # customized response class to change the default URL fetcher
+    def get_url_fetcher(self):
+        # disable host and certificate check
+        context = ssl.create_default_context()
+        context.check_hostname = False
+        context.verify_mode = ssl.CERT_NONE
+        return functools.partial(django_url_fetcher, ssl_context=context)
+
+class MyModelPrintView(WeasyTemplateResponseMixin, PersonnelDetailView):
+    # output of MyModelView rendered as PDF with hardcoded CSS
+    #pdf_stylesheets = [
+        #settings.STATICFILES_DIRS[0] + 'css/app.css',]
+    # show pdf in-line (default: True, show download dialog)
+    pdf_attachment = True
+    # custom response class to configure url-fetcher
+    #response_class = CustomWeasyTemplateResponse
+
+class MyModelDownloadView(WeasyTemplateResponseMixin, PersonnelDetailView):
+    # suggested filename (is required for attachment/download!)
+    pdf_filename = 'mypdf.pdf' '''
