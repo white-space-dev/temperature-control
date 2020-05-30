@@ -1,5 +1,6 @@
 from django.contrib import admin
-from . models import Personnel, Temperature, Department
+from . models import Personnel, Temperature, Department, OIM, Medic
+
 from import_export.admin import ImportExportModelAdmin
 # Register your models here.
 
@@ -8,7 +9,7 @@ from import_export.admin import ImportExportModelAdmin
 class ViewAdmin(ImportExportModelAdmin):
     list_display = ('name', 'rank', 'department', 'date_joined', 'date_signedoff')
     ordering = ('id',)
-    search_fields = ('name', 'position')
+    search_fields = ('name',)
 
     # class PersonnelAdmin(admin.ModelAdmin):
 
@@ -19,4 +20,9 @@ class TemperatureAdmin(admin.ModelAdmin):
     ordering = ('-date_temp_taken',)
 #admin.site.register(Temperature)
 
+
 admin.site.register(Department)
+
+
+admin.site.register(OIM)
+admin.site.register(Medic)

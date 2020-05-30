@@ -1,13 +1,14 @@
 from django.urls import path
 from .views import personnel_list,   department_view, html_to_pdf_view, PersonnelListView, PersonnelDetailView, \
-    update_temp, add_temp #, MyModelDownloadView
+    update_temp, add_temp, search
 from .cron import missing_temp
 
 
 urlpatterns = [
-    path('', department_view, name='department-view'),
+    path('', PersonnelListView.as_view(), name='list-view-all'),
+    path('search/', search, name='search'),
     path('<int:pk>/', personnel_list, name='list-view'),
-    path('list/', PersonnelListView.as_view(), name='list-view-all'),
+    path('dep/', department_view, name='department-view'),
     path('detailed_view/<int:pk>/', PersonnelDetailView.as_view(), name='detailed-view'),
     path('add_temp/<int:pk>/', add_temp, name='add-temperature'),
     path('update_temp/<int:pk>/', update_temp, name='update-temperature'),

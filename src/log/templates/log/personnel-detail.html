@@ -21,6 +21,14 @@ header * {
   display: inline-block;
 }
 
+header img.leftbig
+{
+  width: 150px;
+  height: 150px;
+  margin-right: 15em;
+  margin-left: 0em
+}
+
 header img.left
 {
   width: 75px;
@@ -108,24 +116,6 @@ p.right {
 </head>
 <body>
 
-<!--<div class="container">
-
-    <div class="row">
-        <div class="col-xl-2">
-            <img src="{% static 'log/SBM.png' %}" alt="" width="1%">
-        </div>
-        <div class="col-sm-8">
-            <h1 class="text-center">FPSO NGOMA </h1>
-            <h3 class="text-center">Daily Temperature Monitoring Log</h3>
-        </div>
-        <div class="col-sm-2">
-            <img src="{% static 'log/SOS.png' %}" width = "1%">
-        </div>
-
-    </div>
-</div>
-
-<h2 align="center"><img align="left" src="{% static 'log/SBM.png' %}" alt="" width="10%">                     FPSO NGOMA                     <img align="right" src="{% static 'log/SOS.png' %}" width = "10%"></h2>-->
 
 <div class="header" align="center">
   <header >
@@ -196,26 +186,112 @@ p.right {
         <div class="col-4">
             Monitored By: <br><br>
             _____________ <br>
-            Allan R. Tagongtong, MD <br>
+            {{medic.user.name}}, MD <br>
             N'goma Medic
 
         </div>
-        <div class="col-6">
+        <div class="col-5">
 
         </div>
-        <div class="col-2">
+        <div class="col-3">
             Noted By: <br><br>
             _____________ <br>
-            Jaco Posthumus <br>
+            {{oim.user.name}} <br>
             N'goma OIM
+
         </div>
 
     </div>
 </div>
 <br>
+<br>
+<br>
+<br>
 
-   <!-- <a href="" class="text-center " >Print</a>  need to sort this out TODO -->
-    <a class="btn btn-primary center" href="{% url 'print' person.id %}" role="button">Print</a>
+<!--<div class="header" align="center">
+      <header>
+      <img class="leftbig" src="" alt="star" />
+      <h2 class="align-bottom text-center"><b>Health Status Declaration – Covid-19</b></h2>
+      </header>
+    <div class="container">
+        <div class="text-right">
+        FPSO NGOMA, <br>ENI BLOC 15/06
+        </div>
+    </div>
+</div>-->
+<div class="container">
+    <img class="float-left" src="{% static 'log/SBM_logo.jpg' %}" width="15%">
+    <h2 class="align-bottom text-center"><br><br><b>Health Status Declaration – Covid-19</b></h2>
+</div>
+<br>
+<div class="container">
+        <div class="text-right">
+        <h5>FPSO NGOMA, <br>ENI BLOC 15/06</h5>
+        </div>
+    </div>
+<br>
+<br>
+<br>
+<br>
+<br>
+<div class="container">
+    <h5 >{{person.date_signedoff}}
+    <br>
+    <br>
+    <b>Subject: Health Status Declaration</b>
+    <br>
+    <br>
+    <p>To who it may concern,</p>
+    <br>
+    <p>I hereby declare that Mr <u>{{person.name}}</u> was working offshore from
+and during this period his (her)  health was daily monitored and his (her) temperature measured and
+registered, attached to this declaration you may find the registration.
+Moreover, I declare that during this time he (she) did not present any signs or symptoms related with
+Covid-19 infection.</p>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+<div class="container">
+
+    <div class="row">
+        <div class="col-4">
+            Yours sincerely: <br><br>
+            _____________ <br>
+            {{medic.user.name}}, MD <br>
+            N'goma Medic
+
+        </div>
+        <div class="col-5">
+
+        </div>
+        <div class="col-3">
+            Noted By: <br><br>
+            _____________ <br>
+            {{oim.user.name}} <br>
+            N'goma OIM
+
+        </div>
+
+    </div>
+</div>
+</h5>
+        </div>
+<br>
+<br>
+<br>
+<br>
+<br><br>
+<br>
+<br>
+<br>
+<br>
+
+<a class="btn btn-primary center" href="{% url 'print' person.id %}" role="button">Print</a>
+
 </body>
 </html>
 

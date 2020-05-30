@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">Position</th>
+                <th scope="col">Company</th>
+                <th scope="col">Department</th>
+                <th scope="col">Date Joined</th>
+                <th scope="col">Date Signed off</th>
+                <th scope="col">detail</th>
+                <th scope="col">Add Temp</th>
+                <th scope="col">Add Temp</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for personnel in object_list %}
+
+            <tr>
+                <th scope="row">{{personnel.id}}</th>
+                <td>{{personnel.name}}</td>
+                <td>{{personnel.rank}}</td>
+                <td>{{personnel.company}}</td>
+                <td>{{personnel.department}}</td>
+                <td>{{personnel.date_joined|default_if_none:" "}}</td>
+                <td>{{personnel.date_signedoff|default_if_none:" "}}</td>
+                <td><a href="{% url 'detailed-view' personnel.pk  %}" class="btn btn-outline-primary btn-rounded waves-effect">Detail</a></td>
+                <td><a href="{% url 'add-temperature' personnel.pk %}" class="btn btn-outline-primary btn-rounded waves-effect" >AM</a></td>
+                <td><a href="{% url 'update-temperature' personnel.pk %}" class="btn btn-outline-primary btn-rounded waves-effect" >PM</a></td>
+
+            </tr>
+
+
+        {% endfor %}
+
+        </tbody>
+
+    </table>
+
+
+{% endblock %}

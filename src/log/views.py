@@ -1,8 +1,8 @@
 import ssl
 
 from django.shortcuts import render
-from django.http import HttpResponseRedirect, HttpResponse
-from . models import Personnel, Department, Temperature
+from django.http import HttpResponseRedirect
+from . models import Personnel, Department, Temperature, OIM, Medic
 from .forms import PersonnelForm
 from django.core.files.storage import FileSystemStorage
 from django.http import HttpResponse
@@ -25,13 +25,23 @@ from django.template.loader import render_to_string
 from weasyprint.fonts import FontConfiguration
 
 
-
 def personnel_list(request, pk):
     object_list = Personnel.objects.filter(department=pk)
     context = {
         'object_list': object_list
         }
     return render(request, 'log/front-page.html', context)
+
+
+def search(request):
+    query = request.GET.get('search').lower()
+    object_list_all = Personnel.objects.all()
+    object_list = [person for person in object_list_all if query in person.name.lower()]
+    context = {
+        'object_list': object_list
+        }
+    return render(request, 'log/search.html', context)
+
 
 class PersonnelListView(ListView):
     model = Personnel
@@ -66,6 +76,8 @@ class PersonnelDetailView(DetailView):
         context = super().get_context_data(**kwargs)
         context['person'] = person
         context['temperature'] = person.temperature_set.all()[0:14]
+        context['oim'] = OIM.objects.get(id=1)
+        context['medic'] = Medic.objects.get(id=1)
         return context
 
 def add_temp(request, pk):
@@ -143,10 +155,14 @@ def department_view(request):
 def html_to_pdf_view(request, pk):
     person = Personnel.objects.get(pk=pk)
     temperature = person.temperature_set.all()
+    oim = OIM.objects.get(id=1)
+    medic = Medic.objects.get(id=1)
 
     context = {
         'person': person,
-        'temperature': temperature
+        'temperature': temperature,
+        'oim': oim,
+        'medic': medic
 
     }
     html_string = render_to_string('log/personnel-detail.html', context)

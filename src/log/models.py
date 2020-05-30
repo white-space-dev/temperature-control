@@ -48,3 +48,15 @@ class Temperature(models.Model):
         unique_together = [['user', 'date_temp_taken']]
 
 
+class OIM(models.Model):
+    user = models.ForeignKey(Personnel, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.user.name
+
+
+class Medic(models.Model):
+    user = models.ForeignKey(Personnel, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.user.name
