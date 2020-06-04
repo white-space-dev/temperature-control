@@ -1,5 +1,5 @@
 from django.forms import ModelForm
-from .models import Temperature
+from .models import Temperature, Personnel
 import datetime
 
 
@@ -13,3 +13,8 @@ class PersonnelForm(ModelForm):
 
 
 
+class UpdateForm(ModelForm):
+
+    class Meta:
+        model = Personnel
+        fields = '__all__'

@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1>Update Personnel Details</h1>
+
+{% if submitted %}
+    <p> The details were updated successfully.</p>
+
+{% else %}
+<form action="" method="post" novalidate>
+
+        {{ form.as_p }}
+
+       <input type="submit" value="Submit">
+    {% csrf_token %}
+
+</form>
+
+{% endif %}
+{% endblock %}

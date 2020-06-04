@@ -3,7 +3,7 @@ import ssl
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from . models import Personnel, Department, Temperature, OIM, Medic
-from .forms import PersonnelForm
+from .forms import PersonnelForm, UpdateForm
 from django.core.files.storage import FileSystemStorage
 from django.http import HttpResponse
 from django.template.loader import render_to_string
@@ -80,8 +80,8 @@ class PersonnelDetailView(DetailView):
         context['medic'] = Medic.objects.get(id=1)
         return context
 
+
 def add_temp(request, pk):
-    #qs_name = {'department': [], 'user': [pk], 'temp': [], 'time_temp_taken': []}
     submitted = False
     if request.method == 'POST':
         form = PersonnelForm(request.POST)
@@ -93,6 +93,21 @@ def add_temp(request, pk):
         if 'submitted' in request.GET:
             submitted = True
         return render(request, 'log/add_temp.html', {'form': form, 'submitted': submitted})
+
+
+def personnel_update(request, pk):
+    submitted = False
+    if request.method == 'POST':
+        form = UpdateForm(request.POST)
+        if form.is_valid():
+            form.save()
+        return HttpResponseRedirect('/personnel_update/{}?submitted=True'.format(pk))
+    else:
+        obj = get_object_or_404(Personnel, id=pk)
+        form = UpdateForm(request.POST or None, instance=obj)
+        if 'submitted' in request.GET:
+            submitted = True
+        return render(request, 'log/personnel_update.html', {'form': form, 'submitted': submitted})
 
 
 '''class CreateTemperature(CreateView):

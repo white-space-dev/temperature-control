@@ -2,7 +2,7 @@
 
 {% block content %}
 
-    <table class="table table-bordered">
+    <table class="table table-bordered w-auto">
         <thead>
             <tr>
                 <th scope="col">#</th>
@@ -10,11 +10,12 @@
                 <th scope="col">Position</th>
                 <th scope="col">Company</th>
                 <th scope="col">Department</th>
-                <th scope="col">Date Joined</th>
-                <th scope="col">Date Signed off</th>
-                <th scope="col">detail</th>
+                <th scope="col" class="text-nowrap">Date Joined</th>
+                <th scope="col" class="text-nowrap">Date Signed off</th>
+                <th scope="col">Detail</th>
                 <th scope="col">Add Temp</th>
                 <th scope="col">Add Temp</th>
+                <th scope="col">Edit Details</th>
             </tr>
         </thead>
         <tbody>
@@ -31,6 +32,7 @@
                 <td><a href="{% url 'detailed-view' personnel.pk  %}" class="btn btn-outline-primary btn-rounded waves-effect">Detail</a></td>
                 <td><a href="{% url 'add-temperature' personnel.pk %}" class="btn btn-outline-primary btn-rounded waves-effect" >AM</a></td>
                 <td><a href="{% url 'update-temperature' personnel.pk %}" class="btn btn-outline-primary btn-rounded waves-effect" >PM</a></td>
+                <td><a href="{% url 'personnel-update' personnel.pk %}" class="btn btn-outline-primary btn-rounded waves-effect" >Edit</a></td>
 
             </tr>
 
