@@ -41,7 +41,6 @@ INSTALLED_APPS = [
     'import_export',
     'weasyprint',
     'django_crontab',
-    'django_weasyprint',
 ]
 
 MIDDLEWARE = [

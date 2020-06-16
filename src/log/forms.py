@@ -3,14 +3,11 @@ from .models import Temperature, Personnel
 import datetime
 
 
-
 class PersonnelForm(ModelForm):
 
     class Meta:
         model = Temperature
         fields = '__all__'
-
-
 
 
 class UpdateForm(ModelForm):

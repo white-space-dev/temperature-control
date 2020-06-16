@@ -9,10 +9,10 @@ def missing_temp(request):
 
     for entry in temp:
         rand_temp = uniform(34.2, 36.1)
-        if entry.temp_AM == "":
+        if entry.temp_AM is None:
             entry.temp_AM = rand_temp
             entry.temp_AM.save()
-        elif entry.temp_PM == "":
+        elif entry.temp_PM is None:
             entry.temp_PM = rand_temp
             entry.temp_PM.save()
     return HttpResponse('<h2>Success</h2>')

@@ -16,8 +16,8 @@ from django.urls import reverse_lazy
 from datetime import date
 
 from weasyprint import HTML
-import functools
-from django_weasyprint import WeasyTemplateResponseMixin, WeasyTemplateResponse
+
+
 from django.conf import settings
 
 from django.template.loader import render_to_string
@@ -96,56 +96,14 @@ def add_temp(request, pk):
 
 
 def personnel_update(request, pk):
-    submitted = False
-    if request.method == 'POST':
-        form = UpdateForm(request.POST)
-        if form.is_valid():
-            form.save()
-        return HttpResponseRedirect('/personnel_update/{}?submitted=True'.format(pk))
-    else:
-        obj = get_object_or_404(Personnel, id=pk)
-        form = UpdateForm(request.POST or None, instance=obj)
-        if 'submitted' in request.GET:
-            submitted = True
-        return render(request, 'log/personnel_update.html', {'form': form, 'submitted': submitted})
-
-
-'''class CreateTemperature(CreateView):
-    model = Temperature
-
-    #fields = ['temp_AM']
-   # queryset =
-    form_class = PersonnelForm
-    success_url = reverse_lazy('list-view-all')
-    template_name = 'log/add_temp.html'
-
-    #def get_object(self, queryset=None):
-        #return Personnel.objects.get(id=self.pk)
-
-    def get_initial(self):
-        self.initial = {'user': self.pk}
-        return self.initial'''
-
-
-
-'''class UpdateTemperature(UpdateView):
-    model = Temperature
-    #initial = {'temp_AM': Temperature.objects.get(user=pk, date_temp_taken=date.today()).temp_AM }
-    success_url = reverse_lazy('list-view-all')
-    fields = ['user', 'temp_AM', 'temp_PM', 'date_temp_taken']
-    template_name = 'log/update_temp.html'
-
-    def get_queryset(self):
-        self.user = get_object_or_404(Personnel, id=self.kwargs['pk']).id
-        return Temperature.objects.filter(date_temp_taken=date.today(), user=self.user)
-
-    def get_initial(self):
-        person = Temperature.objects.get(user=self.kwargs['pk'], date_temp_taken=date.today())
-        self.initial = {'user': self.kwargs['pk'], 'temp_AM': person.temp_AM}
-        return (self.initial)
-
-    def get_object(self, queryset=None):
-        return'''
+    context = {}
+    obj = get_object_or_404(Personnel, id=pk)
+    form = UpdateForm(request.POST or None, instance=obj)
+    if form.is_valid():
+        form.save()
+        return HttpResponseRedirect('/')
+    context["form"] = form
+    return render(request, 'log/personnel_update.html', context)
 
 
 def update_temp(request, pk):
@@ -154,7 +112,7 @@ def update_temp(request, pk):
     form = PersonnelForm(request.POST or None, instance=obj)
     if form.is_valid():
         form.save()
-        return HttpResponseRedirect('/list/')
+        return HttpResponseRedirect('/')
     context["form"] = form
     return render(request, 'log/update_temp.html', context)
 
@@ -169,7 +127,7 @@ def department_view(request):
 
 def html_to_pdf_view(request, pk):
     person = Personnel.objects.get(pk=pk)
-    temperature = person.temperature_set.all()
+    temperature = person.temperature_set.all()[0:14]
     oim = OIM.objects.get(id=1)
     medic = Medic.objects.get(id=1)
 
@@ -178,22 +136,16 @@ def html_to_pdf_view(request, pk):
         'temperature': temperature,
         'oim': oim,
         'medic': medic
-
     }
-    html_string = render_to_string('log/personnel-detail.html', context)
-
-    html = HTML(string=html_string, base_url=request.build_absolute_uri())
-    html.write_pdf(target='/tmp/mypdf.pdf', presentational_hints=True);
-
-    fs = FileSystemStorage('/tmp')
-    with fs.open('mypdf.pdf') as pdf:
-        response = HttpResponse(pdf, content_type='application/pdf')
-        response['Content-Disposition'] = 'attachment; filename="mypdf.pdf"'
-        return response
-
+    response = HttpResponse(content_type="application/pdf")
+    response['Content-Disposition'] = "attachment; filename ='mypdf.pdf'"
+    html = render_to_string('log/personnel-detail.html', context)
+    font_config = FontConfiguration()
+    HTML(string=html, base_url=request.build_absolute_uri()).write_pdf(response, font_config=font_config, presentational_hints=True)
     return response
 
-#from __future__ import unicode_literals
+
+
 
 '''def temperature_record(request, pk):
     person = get_object_or_404(Personnel, pk=pk)
