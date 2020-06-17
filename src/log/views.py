@@ -138,7 +138,7 @@ def html_to_pdf_view(request, pk):
         'medic': medic
     }
     response = HttpResponse(content_type="application/pdf")
-    response['Content-Disposition'] = "attachment; filename ='mypdf.pdf'"
+    response['Content-Disposition'] = "attachment; filename ="+person.name+"'.pdf'"
     html = render_to_string('log/personnel-detail.html', context)
     font_config = FontConfiguration()
     HTML(string=html, base_url=request.build_absolute_uri()).write_pdf(response, font_config=font_config, presentational_hints=True)
